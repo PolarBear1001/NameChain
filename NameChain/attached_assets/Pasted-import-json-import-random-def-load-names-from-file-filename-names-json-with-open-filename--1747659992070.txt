@@ -1,0 +1,72 @@
+import json
+import random
+
+def load_names_from_file(filename="names.json"):
+    with open(filename, "r", encoding="utf-8") as f:
+        return json.load(f)
+
+def get_next_chain_letter(name):
+    """Return the first alphabetic character after the first letter (ignoring punctuation)."""
+    for char in name[1:]:
+        if char.isalpha():
+            return char.lower()
+    return None
+
+def validate_chain(current_name, next_name):
+    """Validate that next_name starts with the correct chain letter."""
+    required_letter = get_next_chain_letter(current_name)
+    return required_letter is not None and next_name[0].lower() == required_letter
+
+def play_game():
+    print("Welcome to the Name Chain Game!")
+    print("Rules:")
+    print("- Chain names where the next name starts with the SECOND letter (alphabetic) of the previous one.")
+    print("- Reach the target name to win!\n")
+
+    names = load_names_from_file()
+    names_lower = [name.lower() for name in names]
+    name_mapping = {name.lower(): name for name in names}
+
+    while True:
+        start_name = random.choice(names)
+        target_name = random.choice([n for n in names if n != start_name])
+        chain = [start_name]
+
+        print(f"Start: {start_name}\nTarget: {target_name}\n")
+
+        while True:
+            required_letter = get_next_chain_letter(chain[-1])
+            if required_letter is None:
+                print(f"⚠️ Unable to continue chain from {chain[-1]}. Restarting round...\n")
+                break
+
+            print(f"Current chain: {' → '.join(chain)}")
+            print(f"Next name must start with: '{required_letter.upper()}'\n")
+
+            user_input = input("Your input (or 'quit'): ").strip()
+            if user_input.lower() == 'quit':
+                print("Game over!")
+                return
+
+            input_lower = user_input.lower()
+            if input_lower not in names_lower:
+                print("❌ Please enter a valid name from the database.")
+                continue
+
+            proper_name = name_mapping[input_lower]
+
+            if not validate_chain(chain[-1], proper_name):
+                print(f"❌ '{proper_name}' doesn't start with '{required_letter.upper()}'. Try again!")
+                continue
+
+            chain.append(proper_name)
+
+            if proper_name == target_name:
+                print(f"\n🎉 You won in {len(chain)-1} steps! Final chain: {' → '.join(chain)}")
+                break
+
+        if input("\nPlay again? (y/n): ").lower() != 'y':
+            break
+
+if __name__ == "__main__":
+    play_game()

@@ -1,0 +1,87 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card game-card border-primary">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <span class="game-title">Name Chain</span>
+                <div class="game-stats">
+                    <span class="badge rounded-pill bg-primary">Score: <span id="score">0</span></span>
+                </div>
+            </div>
+            <div class="card-body">
+                <!-- Game Instructions -->
+                <div id="instructions" class="mb-4">
+                    <h5 class="card-title">How to Play:</h5>
+                    <ul class="list-group list-group-flush mb-3">
+                        <li class="list-group-item">Each name must start with the second letter of the previous name</li>
+                        <li class="list-group-item">For example: <strong>John</strong> → <strong>Oscar</strong> (starts with "O")</li>
+                        <li class="list-group-item">Your goal is to reach the target name or create the longest possible chain</li>
+                        <li class="list-group-item">Names cannot be reused in the same chain</li>
+                        <li class="list-group-item">Names must be from our database</li>
+                    </ul>
+                    <button id="start-game" class="btn btn-primary">Start Game</button>
+                </div>
+
+                <!-- Game Board -->
+                <div id="game-board" class="d-none">
+                    <!-- Game Status (Start and Target Names) -->
+                    <div class="game-status-container mb-4">
+                        <div class="row text-center">
+                            <div class="col-6">
+                                <p class="game-label">Start Name</p>
+                                <h5 class="first-name badge bg-info text-dark"></h5>
+                            </div>
+                            <div class="col-6">
+                                <p class="game-label">Target Name</p>
+                                <h5 class="target-name badge bg-danger text-white"></h5>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Current Name and Next Letter -->
+                    <div class="current-name-container text-center mb-4">
+                        <h3 class="current-name" id="current-name"></h3>
+                        <div class="next-letter-container">
+                            <p>Next name must start with: <span class="next-letter badge bg-warning text-dark" id="next-letter"></span></p>
+                        </div>
+                    </div>
+
+                    <!-- Name Input Form -->
+                    <div class="name-input-container mb-5">
+                        <form id="guess-form" class="mb-4">
+                            <div class="input-group">
+                                <input type="text" id="name-input" class="form-control" placeholder="Enter a name..." autocomplete="off">
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                            </div>
+                        </form>
+                        <div id="message" class="alert d-none mb-4"></div>
+                        <div class="text-center mt-3">
+                            <button type="button" id="give-up" class="btn btn-warning">Give Up</button>
+                        </div>
+                    </div>
+
+                    <!-- Name Chain Display -->
+                    <div class="chain-container">
+                        <h5 class="mb-3">Your Name Chain:</h5>
+                        <div id="name-chain" class="name-chain"></div>
+                    </div>
+                </div>
+
+                <!-- Game Over Screen -->
+                <div id="game-over" class="text-center d-none">
+                    <h3 class="mb-3">Game Over!</h3>
+                    <p class="lead mb-4">Your final score: <span id="final-score">0</span></p>
+                    <p id="victory-message" class="mb-4"></p>
+                    <button id="play-again" class="btn btn-primary">Play Again</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/game.js') }}"></script>
+{% endblock %}

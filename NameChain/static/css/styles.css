@@ -1,0 +1,184 @@
+/* Game-specific styles with Wordle-inspired elements */
+
+/* Game card styling */
+.game-card {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    background-color: var(--bs-dark);
+    border-width: 2px;
+}
+
+.game-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+/* Game status styling */
+.game-status-container {
+    background-color: rgba(0, 0, 0, 0.1);
+    border-radius: 0.5rem;
+    padding: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.game-label {
+    margin-bottom: 0.5rem;
+    opacity: 0.8;
+    font-size: 0.9rem;
+}
+
+.first-name, .target-name {
+    font-size: 1.2rem;
+    padding: 0.5rem 1rem;
+    font-weight: bold;
+}
+
+/* Current name and next letter styling */
+.current-name {
+    font-size: 2.5rem;
+    font-weight: bold;
+    letter-spacing: 0.05em;
+    margin-bottom: 0.5rem;
+}
+
+.next-letter {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin: 0 0.2rem;
+    padding: 0.25rem 0.75rem;
+}
+
+/* Name chain display */
+.name-chain {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 1rem;
+    align-items: center;
+}
+
+.chain-item {
+    background-color: var(--bs-secondary);
+    color: var(--bs-white);
+    border-radius: 0.25rem;
+    padding: 0.5rem 1rem;
+    display: inline-block;
+    font-weight: 500;
+    transition: transform 0.2s ease-in-out, background-color 0.3s ease;
+    animation: fadeIn 0.3s ease-out;
+}
+
+.chain-item:hover {
+    transform: translateY(-2px);
+}
+
+.chain-arrow {
+    color: var(--bs-secondary);
+    margin: 0 0.2rem;
+}
+
+/* Target reached styling */
+.target-reached {
+    background-color: var(--bs-danger);
+    color: white;
+    box-shadow: 0 0 10px rgba(220, 53, 69, 0.5);
+    animation: targetReached 1s ease-in-out infinite alternate;
+}
+
+@keyframes targetReached {
+    from { box-shadow: 0 0 5px rgba(220, 53, 69, 0.5); }
+    to { box-shadow: 0 0 15px rgba(220, 53, 69, 0.8); }
+}
+
+/* Form elements */
+#name-input {
+    font-size: 1.2rem;
+    padding: 0.75rem;
+    border-radius: 0.375rem 0 0 0.375rem;
+}
+
+#name-input:focus {
+    box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+    border-color: #86b7fe;
+}
+
+/* Message and alert styling */
+#message {
+    min-height: 60px;
+    margin: 1.5rem 0;
+}
+
+/* Give up button styling */
+#give-up {
+    margin-top: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+/* Animation for successful guesses */
+@keyframes correctGuess {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+.correct-guess {
+    animation: correctGuess 0.5s ease-in-out;
+    background-color: var(--bs-success) !important;
+}
+
+/* Animation for incorrect guesses */
+@keyframes incorrectGuess {
+    0% { transform: translateX(0); }
+    25% { transform: translateX(5px); }
+    50% { transform: translateX(-5px); }
+    75% { transform: translateX(5px); }
+    100% { transform: translateX(0); }
+}
+
+.incorrect-guess {
+    animation: incorrectGuess 0.4s ease-in-out;
+}
+
+/* Animation for fade in elements */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Animation for game over */
+@keyframes gameOver {
+    0% { transform: scale(0.8); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+#game-over {
+    animation: gameOver 0.5s ease-out;
+}
+
+/* Victory message styling */
+#victory-message {
+    font-size: 1.25rem;
+    color: var(--bs-info);
+    font-weight: 500;
+    white-space: pre-line; /* Allow newlines in the message */
+    text-align: left;
+    max-width: 80%;
+    margin: 0 auto 2rem auto;
+    line-height: 1.6;
+}
+
+/* Responsive adjustments */
+@media (max-width: 576px) {
+    .current-name {
+        font-size: 2rem;
+    }
+    
+    .chain-item {
+        padding: 0.4rem 0.8rem;
+        font-size: 0.9rem;
+    }
+    
+    .first-name, .target-name {
+        font-size: 1rem;
+        padding: 0.4rem 0.8rem;
+    }
+}
